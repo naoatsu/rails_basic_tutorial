@@ -1,0 +1,40 @@
+<%= render "shared/errors", obj: @member %>
+<table class="attr">
+  <tr>
+    <th><%= f.label :number %></th>
+    <td><%= f.text_field :number, size: 8 %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :name %></th>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :full_name %></th>
+    <td><%= f.text_field :full_name %></td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td>
+      <%= f.radio_button :gender, 0 %>
+      <%= f.label :gender_0 %>
+      <%= f.radio_button :gender, 1 %>
+      <%= f.label :gender_1 %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label :birthday, for:"member_birthday_1i" %></th>
+    <td><%= add_date_unit(f.date_select :birthday,
+            start_year: 1940, end_year: Time.now.year, use_month_numbers:true) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :email %></th>
+    <td><%= f.text_field :email %></td>
+  </tr>
+  <tr>
+    <th>管理者</th>
+    <td>
+      <%= f.check_box :administrator %>
+      <%= f.label :administrator %>
+    </td>
+  </tr>
+</table>

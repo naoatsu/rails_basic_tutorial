@@ -144,3 +144,9 @@
  div#sidebar li {
    margin-bottom: 0.3em;
  }
+
+.debug_dump {
+  background-color: #eee;
+  font-size: 16px;
+  padding: 10px;
+}
