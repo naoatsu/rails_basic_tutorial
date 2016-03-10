@@ -31,7 +31,12 @@ group :development do
 end
 # Use Unicorn as the app server
 # gem 'unicorn'
-
+group :test do
+  gem 'factory_girl_rails', '~>4.4.0'
+  gem 'minitest-reporters', '1.0.5'
+  gem 'mini_backtrace',     '0.1.3'
+  gem 'guard-minitest',     '2.3.1'
+end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
