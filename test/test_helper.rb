@@ -10,4 +10,13 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  private
+    # ログイン状態にする
+    def login_as(name, admin = false)
+      session[:member_id] = FactoryGirl.create(:member, name: name, administrator: admin)
+    end
+
+    def logout
+      session.delete(:member_id)
+    end
 end

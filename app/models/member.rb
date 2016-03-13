@@ -1,15 +1,4 @@
 class Member < ActiveRecord::Base
-  include EmailAddressChecker
-  class << self
-    def search(query)
-      rel = order("number")
-      if query.present?
-        rel = rel.where("name LIKE ? OR full_name LIKE ?"   , "%#{query}%", "%#{query}%")
-      end
-      rel
-    end
-  end
-
   validates :number, presence: true,
             numericality: {only_integer: true,
             greater_than: 0, less_than: 100, allow_blank:true},
@@ -22,6 +11,38 @@ class Member < ActiveRecord::Base
   validates :full_name, length: { maximum: 20 }
 
   validate :check_email
+  validates :password, presence: {on: :create },
+    confirmation: { allow_blank: true }
+
+  attr_accessor :password, :password_confirmation
+
+  def password=(val)
+    if val.present?
+      self.hashed_password =
+      BCrypt::Password.create(val)
+    end
+    @password = val
+  end
+
+  include EmailAddressChecker
+  class << self
+    def search(query)
+      rel = order("number")
+      if query.present?
+        rel = rel.where("name LIKE ? OR full_name LIKE ?"   , "%#{query}%", "%#{query}%")
+      end
+      rel
+    end
+
+    def authenticate(name, password)
+      member = find_by(name: name)
+      if member && member.hashed_password.present? && BCrypt::Password.new(member.hashed_password) == password
+        member
+      else
+        nil
+      end
+    end
+  end
 
   private
     def check_email
