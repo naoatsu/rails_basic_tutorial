@@ -1,4 +1,12 @@
 class Member < ActiveRecord::Base
+  include EmailAddressChecker
+
+  has_many :entries, dependent: :destroy
+  has_many :votes, dependent: :destroy
+  has_many :voted_entries, through: :votes, source: :entry
+  has_one :image, class_name: "MemberImage", dependent: :destroy
+  accepts_nested_attributes_for :image, allow_destroy: true
+
   validates :number, presence: true,
             numericality: {only_integer: true,
             greater_than: 0, less_than: 100, allow_blank:true},
@@ -42,6 +50,10 @@ class Member < ActiveRecord::Base
         nil
       end
     end
+  end
+
+  def votable_for?(entry)
+    entry && entry.author != self && !votes.exists?(entry_id: entry.id)
   end
 
   private

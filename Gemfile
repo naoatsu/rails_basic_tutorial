@@ -38,7 +38,7 @@ group :test do
   gem 'minitest-reporters', '1.0.5'
   gem "minitest"
   gem "minitest-rails"
-  gem 'mini_backtrace',     '0.1.3'
+  # gem 'mini_backtrace',     '0.1.3'
   gem 'guard-minitest',     '2.3.1'
 end
 # Use Capistrano for deployment
